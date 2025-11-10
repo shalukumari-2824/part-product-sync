@@ -13,12 +13,7 @@ public with sharing class ProductSelector {
     public Map<String, Product2> getProductsByProductCodes(Set<String> productCodes) {
         Map<String, Product2> productMap = new Map<String, Product2>();
         
-        List<Product2> products = [
-            SELECT Id, Name, ProductCode, IsActive
-            FROM Product2
-            WHERE ProductCode IN :productCodes
-            WITH SECURITY_ENFORCED
-        ];
+        List<Product2> products = [SELECT Id, Name, ProductCode, IsActive FROM Product2 WHERE ProductCode IN :productCodes WITH SECURITY_ENFORCED ];
         
         for (Product2 prod : products) {
             if (String.isNotBlank(prod.ProductCode)) {

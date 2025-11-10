@@ -10,14 +10,9 @@ public with sharing class PartSelector {
      * @return List of parts that need product assignment
      */
     public List<SQX_Part__c> getActivePartsWithoutProduct() {
-        return [
-            SELECT Id, Name, Part_Number__c, Active__c, Product__c
-            FROM SQX_Part__c
-            WHERE Active__c = true 
-            AND Product__c = null
-            WITH SECURITY_ENFORCED
-            ORDER BY CreatedDate
-        ];
+        List<SQX_Part__c> partList =[SELECT Id, Name, Part_Number__c, Active__c, Product__c FROM SQX_Part__c WHERE Active__c = true 
+            AND Product__c = null WITH SECURITY_ENFORCED ORDER BY CreatedDate LIMIT 49999];
+      return partList;
     }
     
     /**
@@ -26,11 +21,9 @@ public with sharing class PartSelector {
      * @return List of matching parts
      */
     public List<SQX_Part__c> getPartsByPartNumbers(Set<String> partNumbers) {
-        return [
-            SELECT Id, Name, Part_Number__c, Active__c, Product__c
-            FROM SQX_Part__c
-            WHERE Part_Number__c IN :partNumbers
-            WITH SECURITY_ENFORCED
-        ];
+        List<SQX_Part__c> partList = [
+            SELECT Id, Name, Part_Number__c, Active__c, Product__c FROM SQX_Part__c
+            WHERE Part_Number__c IN :partNumbers WITH SECURITY_ENFORCED LIMIT 49999 ];
+        return partList;
     }
 }

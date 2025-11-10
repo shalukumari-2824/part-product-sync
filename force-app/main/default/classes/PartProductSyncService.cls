@@ -46,7 +46,7 @@ public with sharing class PartProductSyncService {
             // Get active parts without product reference
             List<SQX_Part__c> partsToSync = partSelector.getActivePartsWithoutProduct();
             
-            if (partsToSync.isEmpty()) {
+            if (partsToSync.size()<1) {
                 result.message = 'No parts to synchronize';
                 return result;
             }
